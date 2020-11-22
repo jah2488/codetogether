@@ -12,7 +12,6 @@ defmodule CodetogetherappWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-
   end
 
   scope "/", CodetogetherappWeb do

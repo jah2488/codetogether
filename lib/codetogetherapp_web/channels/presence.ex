@@ -5,6 +5,7 @@ defmodule CodetogetherappWeb.Presence do
   See the [`Phoenix.Presence`](http://hexdocs.pm/phoenix/Phoenix.Presence.html)
   docs for more details.
   """
-  use Phoenix.Presence, otp_app: :codetogetherapp,
-                        pubsub_server: Codetogetherapp.PubSub
+  use Phoenix.Presence,
+    otp_app: :codetogetherapp,
+    pubsub_server: Codetogetherapp.PubSub
 end

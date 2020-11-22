@@ -21,7 +21,7 @@ defmodule CodetogetherappWeb.AdminChannel do
   # broadcast to everyone in the current topic (admin:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 

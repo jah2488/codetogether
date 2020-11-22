@@ -20,7 +20,29 @@ defmodule Codetogetherapp.Codetogetherapp.Game do
   @doc false
   def changeset(game, attrs) do
     game
-    |> cast(attrs, [:name, :description, :mode, :complete, :max_input, :vote_interval, :vote_threshold, :can_vote, :confetti, :play_state])
-    |> validate_required([:name, :description, :mode, :complete, :max_input, :vote_interval, :vote_threshold, :can_vote, :confetti, :play_state])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :mode,
+      :complete,
+      :max_input,
+      :vote_interval,
+      :vote_threshold,
+      :can_vote,
+      :confetti,
+      :play_state
+    ])
+    |> validate_required([
+      :name,
+      :description,
+      :mode,
+      :complete,
+      :max_input,
+      :vote_interval,
+      :vote_threshold,
+      :can_vote,
+      :confetti,
+      :play_state
+    ])
   end
 end
