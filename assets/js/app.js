@@ -13,3 +13,20 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+import React from "react";
+import ReactDOM from "react-dom";
+import Game from './views/Game'
+
+const app = document.getElementById("app");
+
+const pathName = window.location.pathname.split("/")
+const path = pathName[1]
+const id = pathName[2]
+
+switch (path) {
+  case "games":
+    if (!id) break;
+    ReactDOM.render(<Game id={id} />, app);
+    break;
+}

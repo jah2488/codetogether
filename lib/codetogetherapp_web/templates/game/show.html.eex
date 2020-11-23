@@ -1,0 +1,3 @@
+<div id="app"></div>
+
+<h1>EEX -- Game: <%= @game.name %></h1>

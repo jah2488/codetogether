@@ -18,6 +18,9 @@ defmodule CodetogetherappWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    get "/games", GameController, :index
+    get "/games/:id", GameController, :show
   end
 
   scope "/admin", CodetogetherappWeb do
