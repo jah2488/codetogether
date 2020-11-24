@@ -26,7 +26,7 @@ defmodule CodetogetherappWeb.PageLive do
   end
 
   defp search(query) do
-    if not TestliveWeb.Endpoint.config(:code_reloader) do
+    if not CodetogetherappWeb.Endpoint.config(:code_reloader) do
       raise "action disabled when not in development"
     end
 

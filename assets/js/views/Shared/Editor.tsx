@@ -12,11 +12,7 @@ const Output = ({ program: { code }, program, output }) => (
     <div className="program-code scrollable">
       <pre
         dangerouslySetInnerHTML={{
-          __html: formatCode(
-            code,
-            output,
-            program.settings.show_invisibles
-          ),
+          __html: formatCode(code, output, program.settings.show_invisibles),
         }}
       />
     </div>
@@ -33,21 +29,16 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
   if (showInvisibles) {
     lines = code.replace(/ /g, "<span class='space'>·</span>").split("\n");
   } else {
-
     let highlighted_code = hljs.highlight("ruby", code).value;
-    
+
     lines = highlighted_code.split("\n");
   }
 
   for (let i = 0; i < MAX_START_LINES - lines.length; i++) {
-    remainderLines.push(`<span class='line'></span>`)
+    remainderLines.push(`<span class='line'></span>`);
   }
 
-  if (code === "") return (
-    `<span class='line present-line'>` +
-    textCursor +
-    remainderLines.join("")
-  );
+  if (code === "") return `<span class='line present-line'>` + textCursor + remainderLines.join("");
 
   const formattedLines = lines.map((line, index) => {
     if (inString) {
@@ -62,20 +53,20 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
         inString = false;
       } else {
         if (index !== lines.length - 1) {
-          line = line + '</span>';
+          line = line + "</span>";
         }
         inString = true;
       }
     }
     return line;
-  })
-  
+  });
+
   const allLines = formattedLines
     .map((line, index) => {
       if (index === lines.length - 2) {
         return `${line}<span class="newline">${showInvisibles ? "⏎" : ""}</span></span><span class="line present-line">`;
       }
-      
+
       if (index === lines.length - 1) {
         return `${line}<span class="newline">${showInvisibles ? "⏎" : ""}</span>`;
       }
@@ -88,11 +79,7 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
 
   const errorOnFirstLine = Number(output?.err_ln) === 1;
 
-  return (
-    (`<span class="line ${errorOnFirstLine ? "error-line" : ""}">${allLines}`) +
-    textCursor +
-    remainderLines.join("")
-  );
+  return `<span class="line ${errorOnFirstLine ? "error-line" : ""}">${allLines}` + textCursor + remainderLines.join("");
 };
 
 export default Output;

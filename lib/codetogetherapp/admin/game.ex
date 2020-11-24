@@ -34,15 +34,7 @@ defmodule Codetogetherapp.Admin.Game do
     ])
     |> validate_required([
       :name,
-      :description,
       :mode,
-      :complete,
-      :max_input,
-      :vote_interval,
-      :vote_threshold,
-      :can_vote,
-      :confetti,
-      :play_state
     ])
   end
 end

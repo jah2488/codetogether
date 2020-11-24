@@ -1,6 +1,8 @@
 defmodule CodetogetherappWeb.Router do
-  use CodetogetherappWeb, :router
+  import Ecto.Query, warn: false
+  alias Codetogetherapp.Repo
 
+  use CodetogetherappWeb, :router
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,8 @@ defmodule CodetogetherappWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :auth_user
+    plug :put_user_token
   end
 
   pipeline :api do
@@ -25,13 +29,38 @@ defmodule CodetogetherappWeb.Router do
 
   scope "/admin", CodetogetherappWeb do
     pipe_through :browser
-    live "/games", GameLive.Index, :index
-    live "/games/new", GameLive.Index, :new
-    live "/games/:id/edit", GameLive.Index, :edit
-
-    live "/games/:id", GameLive.Show, :show
-    live "/games/:id/show/edit", GameLive.Show, :edit
+    resources "/games", GameController
   end
+
+  defp auth_user(conn, _) do
+    if conn.cookies["user_token"] do
+      if user = Repo.get_by(Codetogetherapp.Codetogetherapp.User, token: conn.cookies["user_token"]) do
+        assign(conn, :current_user, user)
+      else
+        token = :crypto.strong_rand_bytes(64) |> Base.url_encode64()
+        {:ok, user} = Repo.insert(%Codetogetherapp.Codetogetherapp.User{ token: token, color: token, ip: Enum.join(Tuple.to_list(conn.remote_ip), "") })
+        put_resp_cookie(conn, "user_token", token)
+        assign(conn, :current_user, user)
+      end
+    else
+      token = :crypto.strong_rand_bytes(64) |> Base.url_encode64()
+      {:ok, user} = Repo.insert(%Codetogetherapp.Codetogetherapp.User{ token: token, color: token, ip: Enum.join(Tuple.to_list(conn.remote_ip), "") })
+      put_resp_cookie(conn, "user_token", token)
+      assign(conn, :current_user, user)
+    end
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = conn.assigns[:current_user] do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      color = current_user.color
+      assign(conn, :user_token, token)
+      assign(conn, :user_color, color)
+    else
+      conn
+    end
+  end
+
 
   # Enables LiveDashboard only for development
   #
@@ -45,7 +74,7 @@ defmodule CodetogetherappWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: CodetogetherappWeb.Telemetry
+      live_dashboard "/dashboard", metrics: CodetogetherappWeb.Telemetry, ecto_repos: [Codetogetherapp.Repo]
     end
   end
 end

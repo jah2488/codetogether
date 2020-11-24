@@ -45,7 +45,7 @@ defmodule CodetogetherappWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView, layout: {CodetogetherappWeb.LayoutView, "live.html"}
+      use Phoenix.LiveView, layout: {CodetogetherappWeb.LayoutView, "root.html"}
 
       unquote(view_helpers())
     end

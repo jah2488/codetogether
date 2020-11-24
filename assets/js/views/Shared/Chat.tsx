@@ -1,33 +1,13 @@
 import Button from "../../components/Button";
-import Reference from "../Admin/Program/Reference";
+import Reference from "../../components/Reference";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCode,
-  faUsers,
-  faEye,
-  faEyeSlash,
-  faKeyboard,
-  faUserPlus,
-  faVoteYea,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCode, faUsers, faEye, faEyeSlash, faKeyboard, faUserPlus, faVoteYea } from "@fortawesome/free-solid-svg-icons";
 import Constants from "../../lib/constants/constants";
 
-const Chat = ({
-  _handleSubmit,
-  _handleInput,
-  _handleEnter,
-  _handleInvisibilityToggle,
-  program,
-  addition,
-  error,
-  userToken,
-}) => {
+const Chat = ({ _handleSubmit, _handleInput, _handleEnter, _handleInvisibilityToggle, program, addition, error, userToken }) => {
   const isMessage = addition.substr(0, 1) === Constants.CODE_KEY;
-  const remainingCharacters = Math.min(
-    Math.max(program.settings.max_input_mode - addition.length, 0),
-    program.settings.max_input_mode
-  );
+  const remainingCharacters = Math.min(Math.max(program.settings.max_input_mode - addition.length, 0), program.settings.max_input_mode);
 
   return (
     <div className="chat">
@@ -64,8 +44,7 @@ const Chat = ({
         <div className="chat__section--output">
           {program &&
             program.messages.map((message) => {
-              const currentUserStyle =
-                userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
+              const currentUserStyle = userToken === message.token ? "chat__output--current-user" : "chat__output--other-user";
 
               if (message.is_code) {
                 return (
@@ -80,11 +59,7 @@ const Chat = ({
                 );
               } else {
                 return (
-                  <div
-                    key={message.id}
-                    style={{ backgroundColor: message.color }}
-                    className={`chat__output ${currentUserStyle}`}
-                  >
+                  <div key={message.id} style={{ backgroundColor: message.color }} className={`chat__output ${currentUserStyle}`}>
                     <span className="chat__output--text">{message.name}</span>
                   </div>
                 );
@@ -107,11 +82,7 @@ const Chat = ({
             autoFocus
             autoComplete="off"
           />
-          <Button
-            className="button chat__field--submit mb-space-sm"
-            handleClick={() => _handleSubmit(addition)}
-            name="Send"
-          />
+          <Button className="button chat__field--submit mb-space-sm" handleClick={() => _handleSubmit(addition)} name="Send" />
         </div>
         <div className="chat__field--submit-wrapper">
           <Reference _handleSubmit={_handleSubmit} />

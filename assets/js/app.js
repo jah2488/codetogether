@@ -1,32 +1,20 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import "../css/app.scss"
+import "../css/app.css";
 
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import deps with the dep name or local files with a relative path, for example:
-//
-//     import {Socket} from "phoenix"
-//     import socket from "./socket"
-//
-import "phoenix_html"
+import { Socket } from "phoenix";
+import socket from "./socket";
 
-import React from "react";
-import ReactDOM from "react-dom";
-import Game from './views/Game'
+import "phoenix_html";
 
-const app = document.getElementById("app");
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import App from "./App";
 
-const pathName = window.location.pathname.split("/")
-const path = pathName[1]
-const id = pathName[2]
+const pathName = window.location.pathname.split("/");
+const id = pathName[2];
 
-switch (path) {
-  case "games":
-    if (!id) break;
-    ReactDOM.render(<Game id={id} />, app);
-    break;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<App id={id} />, document.getElementById("app"));
+});

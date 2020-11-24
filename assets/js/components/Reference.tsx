@@ -1,5 +1,5 @@
 import React from "react";
-import Constants from "../../../lib/constants/constants";
+import Constants from "../lib/constants/constants";
 
 const Reference = ({ _handleSubmit }) => {
   const { CODE_KEY, COMMANDS } = Constants;

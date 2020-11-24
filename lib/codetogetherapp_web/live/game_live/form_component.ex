@@ -24,6 +24,7 @@ defmodule CodetogetherappWeb.GameLive.FormComponent do
   end
 
   def handle_event("save", %{"game" => game_params}, socket) do
+    IO.inspect(game_params, socket)
     save_game(socket, socket.assigns.action, game_params)
   end
 

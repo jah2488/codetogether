@@ -1,14 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es6",
-    "allowJs": true, 
-    "jsx": "react", 
-    "outDir": "./dist/", 
-    "strict": true, 
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": false,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "esnext"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "target": "es2016",
   },
+  "include": [
+    "./**/*.ts", "./**/*.tsx"
+  ],
   "exclude": [
     "/node_modules/**/*",
   ]
