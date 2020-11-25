@@ -1,5 +1,5 @@
-defmodule CodetogetherappWeb.PageControllerTest do
-  use CodetogetherappWeb.ConnCase
+defmodule CodetogetherWeb.PageControllerTest do
+  use CodetogetherWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

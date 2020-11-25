@@ -1,5 +1,5 @@
-defmodule CodetogetherappWeb.LayoutViewTest do
-  use CodetogetherappWeb.ConnCase, async: true
+defmodule CodetogetherWeb.LayoutViewTest do
+  use CodetogetherWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

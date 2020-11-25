@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :codetogetherapp,
-  ecto_repos: [Codetogetherapp.Repo]
+config :codetogether,
+  ecto_repos: [Codetogether.Repo]
 
 # Configures the endpoint
-config :codetogetherapp, CodetogetherappWeb.Endpoint,
+config :codetogether, CodetogetherWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "mx5RGkeTpyb4vFrQca0d8EqRuSHxwLJf8Xrhj7Bqn1yuOY4r2HkZGKDlBJCrs9C0",
-  render_errors: [view: CodetogetherappWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Codetogetherapp.PubSub,
+  render_errors: [view: CodetogetherWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Codetogether.PubSub,
   live_view: [signing_salt: "xE1f4B6J6f37D9ar2XvLkpHv7lA+c/7/4D4ANDoi"]
 
 # Configures Elixir's Logger

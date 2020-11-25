@@ -1,4 +1,4 @@
-defmodule Codetogetherapp.Repo.Migrations.CreateGame do
+defmodule Codetogether.Repo.Migrations.CreateGame do
   use Ecto.Migration
 
   def change do

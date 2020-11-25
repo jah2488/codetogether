@@ -1,4 +1,4 @@
-defmodule Codetogetherapp.Repo.Migrations.CreateUsers do
+defmodule Codetogether.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

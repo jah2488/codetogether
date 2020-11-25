@@ -1,4 +1,4 @@
-defmodule CodetogetherappWeb.ChannelCase do
+defmodule CodetogetherWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule CodetogetherappWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use CodetogetherappWeb.ChannelCase, async: true`, although
+  by setting `use CodetogetherWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,18 +21,18 @@ defmodule CodetogetherappWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import CodetogetherappWeb.ChannelCase
+      import CodetogetherWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint CodetogetherappWeb.Endpoint
+      @endpoint CodetogetherWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogetherapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogether.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Codetogetherapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Codetogether.Repo, {:shared, self()})
     end
 
     :ok

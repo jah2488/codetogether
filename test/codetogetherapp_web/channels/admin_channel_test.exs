@@ -1,11 +1,11 @@
-defmodule CodetogetherappWeb.AdminChannelTest do
-  use CodetogetherappWeb.ChannelCase
+defmodule CodetogetherWeb.AdminChannelTest do
+  use CodetogetherWeb.ChannelCase
 
   setup do
     {:ok, _, socket} =
-      CodetogetherappWeb.UserSocket
+      CodetogetherWeb.UserSocket
       |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(CodetogetherappWeb.AdminChannel, "admin:lobby")
+      |> subscribe_and_join(CodetogetherWeb.AdminChannel, "admin:lobby")
 
     %{socket: socket}
   end

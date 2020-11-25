@@ -1,4 +1,4 @@
-defmodule Codetogetherapp.DataCase do
+defmodule Codetogether.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule Codetogetherapp.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use Codetogetherapp.DataCase, async: true`, although
+  by setting `use Codetogether.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -18,20 +18,20 @@ defmodule Codetogetherapp.DataCase do
 
   using do
     quote do
-      alias Codetogetherapp.Repo
+      alias Codetogether.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Codetogetherapp.DataCase
+      import Codetogether.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogetherapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogether.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Codetogetherapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Codetogether.Repo, {:shared, self()})
     end
 
     :ok

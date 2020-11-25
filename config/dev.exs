@@ -1,7 +1,7 @@
 use Mix.Config
 
 # Configure your database
-config :codetogetherapp, Codetogetherapp.Repo,
+config :codetogether, Codetogether.Repo,
   username: "postgres",
   password: "postgres",
   database: "codetogetherapp_dev",
@@ -15,7 +15,7 @@ config :codetogetherapp, Codetogetherapp.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :codetogetherapp, CodetogetherappWeb.Endpoint,
+config :codetogether, CodetogetherWeb.Endpoint,
   http: [port: 4000],
   https: [
     port: 4001,
@@ -51,13 +51,13 @@ config :codetogetherapp, CodetogetherappWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :codetogetherapp, CodetogetherappWeb.Endpoint,
+config :codetogether, CodetogetherWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/codetogetherapp_web/(live|views)/.*(ex)$",
-      ~r"lib/codetogetherapp_web/templates/.*(eex)$"
+      ~r"lib/codetogether_web/(live|views)/.*(ex)$",
+      ~r"lib/codetogether_web/templates/.*(eex)$"
     ]
   ]
 

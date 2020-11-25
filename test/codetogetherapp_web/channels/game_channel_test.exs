@@ -1,11 +1,11 @@
-defmodule CodetogetherappWeb.GameChannelTest do
-  use CodetogetherappWeb.ChannelCase
+defmodule CodetogetherWeb.GameChannelTest do
+  use CodetogetherWeb.ChannelCase
 
   setup do
     {:ok, _, socket} =
-      CodetogetherappWeb.UserSocket
+      CodetogetherWeb.UserSocket
       |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(CodetogetherappWeb.GameChannel, "game:lobby")
+      |> subscribe_and_join(CodetogetherWeb.GameChannel, "game:lobby")
 
     %{socket: socket}
   end

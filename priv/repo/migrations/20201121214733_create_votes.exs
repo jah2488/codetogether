@@ -1,13 +1,13 @@
-defmodule Codetogetherapp.Repo.Migrations.CreateVotes do
+defmodule Codetogether.Repo.Migrations.CreateVotes do
   use Ecto.Migration
 
   def change do
     create table(:votes) do
-      add :nominee, references(:nominees, on_delete: :nothing)
+      add :nominee_id, references(:nominees, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:votes, [:nominee])
+    create index(:votes, [:nominee_id])
   end
 end

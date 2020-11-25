@@ -1,10 +1,10 @@
-defmodule Codetogetherapp.AdminTest do
-  use Codetogetherapp.DataCase
+defmodule Codetogether.AdminTest do
+  use Codetogether.DataCase
 
-  alias Codetogetherapp.Admin
+  alias Codetogether.Admin
 
   describe "games" do
-    alias Codetogetherapp.Admin.Game
+    alias Codetogether.Admin.Game
 
     @valid_attrs %{}
     @update_attrs %{}
@@ -61,7 +61,7 @@ defmodule Codetogetherapp.AdminTest do
   end
 
   describe "games" do
-    alias Codetogetherapp.Admin.Game
+    alias Codetogether.Admin.Game
 
     @valid_attrs %{mode: "some mode", name: "some name"}
     @update_attrs %{mode: "some updated mode", name: "some updated name"}

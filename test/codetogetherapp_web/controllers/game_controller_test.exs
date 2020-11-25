@@ -1,7 +1,7 @@
-defmodule CodetogetherappWeb.GameControllerTest do
-  use CodetogetherappWeb.ConnCase
+defmodule CodetogetherWeb.GameControllerTest do
+  use CodetogetherWeb.ConnCase
 
-  alias Codetogetherapp.Admin
+  alias Codetogether.Admin
 
   @create_attrs %{mode: "some mode", name: "some name"}
   @update_attrs %{mode: "some updated mode", name: "some updated name"}
@@ -75,6 +75,7 @@ defmodule CodetogetherappWeb.GameControllerTest do
     test "deletes chosen game", %{conn: conn, game: game} do
       conn = delete(conn, Routes.game_path(conn, :delete, game))
       assert redirected_to(conn) == Routes.game_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.game_path(conn, :show, game))
       end

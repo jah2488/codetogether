@@ -1,9 +1,9 @@
-defmodule CodetogetherappWeb.GameLiveTest do
-  use CodetogetherappWeb.ConnCase
+defmodule CodetogetherWeb.GameLiveTest do
+  use CodetogetherWeb.ConnCase
 
   import Phoenix.LiveViewTest
 
-  alias Codetogetherapp.Admin
+  alias Codetogether.Admin
 
   @create_attrs %{}
   @update_attrs %{}

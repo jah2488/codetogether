@@ -1,3 +1,3 @@
-defmodule CodetogetherappWeb.PageViewTest do
-  use CodetogetherappWeb.ConnCase, async: true
+defmodule CodetogetherWeb.PageViewTest do
+  use CodetogetherWeb.ConnCase, async: true
 end

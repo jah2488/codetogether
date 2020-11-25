@@ -1,4 +1,4 @@
-defmodule CodetogetherappWeb.ConnCase do
+defmodule CodetogetherWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule CodetogetherappWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use CodetogetherappWeb.ConnCase, async: true`, although
+  by setting `use CodetogetherWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,20 +22,20 @@ defmodule CodetogetherappWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import CodetogetherappWeb.ConnCase
+      import CodetogetherWeb.ConnCase
 
-      alias CodetogetherappWeb.Router.Helpers, as: Routes
+      alias CodetogetherWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint CodetogetherappWeb.Endpoint
+      @endpoint CodetogetherWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogetherapp.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Codetogether.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Codetogetherapp.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Codetogether.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
