@@ -7,19 +7,26 @@ hljs.configure({
   tabReplace: "  ",
 });
 
-const Output = ({ program: { code }, program, output }) => (
+const Editor = ({ game: { code }, showInvisibles, output }) => (
   <div className="code-section source">
     <div className="program-code scrollable">
       <pre
         dangerouslySetInnerHTML={{
-          __html: formatCode(code, output, program.settings.show_invisibles),
+          __html: formatCode(code, output, showInvisibles),
         }}
       />
     </div>
   </div>
 );
 
-const formatCode = (code: string, output: { raw: string; err_ln: number }, showInvisibles: boolean): string => {
+const formatCode = (
+  code: string,
+  output: { raw: string; err_ln: number },
+  showInvisibles: boolean
+): string => {
+  if (!code) {
+    return;
+  }
   const MAX_START_LINES = 20;
   const textCursor = `<span class='text-cursor'></span></span>`;
   let lines = [];
@@ -38,7 +45,10 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
     remainderLines.push(`<span class='line'></span>`);
   }
 
-  if (code === "") return `<span class='line present-line'>` + textCursor + remainderLines.join("");
+  if (code === "")
+    return (
+      `<span class='line present-line'>` + textCursor + remainderLines.join("")
+    );
 
   const formattedLines = lines.map((line, index) => {
     if (inString) {
@@ -64,14 +74,20 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
   const allLines = formattedLines
     .map((line, index) => {
       if (index === lines.length - 2) {
-        return `${line}<span class="newline">${showInvisibles ? "⏎" : ""}</span></span><span class="line present-line">`;
+        return `${line}<span class="newline">${
+          showInvisibles ? "⏎" : ""
+        }</span></span><span class="line present-line">`;
       }
 
       if (index === lines.length - 1) {
-        return `${line}<span class="newline">${showInvisibles ? "⏎" : ""}</span>`;
+        return `${line}<span class="newline">${
+          showInvisibles ? "⏎" : ""
+        }</span>`;
       }
 
-      return `${line}<span class='newline ${index}'>${showInvisibles ? "⏎" : ""}</span></span><span class='line ${
+      return `${line}<span class='newline ${index}'>${
+        showInvisibles ? "⏎" : ""
+      }</span></span><span class='line ${
         Number(output?.err_ln) === Number(index + 2) ? "error-line" : ""
       }'>`;
     })
@@ -79,7 +95,11 @@ const formatCode = (code: string, output: { raw: string; err_ln: number }, showI
 
   const errorOnFirstLine = Number(output?.err_ln) === 1;
 
-  return `<span class="line ${errorOnFirstLine ? "error-line" : ""}">${allLines}` + textCursor + remainderLines.join("");
+  return (
+    `<span class="line ${errorOnFirstLine ? "error-line" : ""}">${allLines}` +
+    textCursor +
+    remainderLines.join("")
+  );
 };
 
-export default Output;
+export default Editor;

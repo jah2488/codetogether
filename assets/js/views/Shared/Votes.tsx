@@ -1,24 +1,31 @@
 import Button from "../../components/Button";
 import React from "react";
 
-const Votes = ({ program, _handleSubmit, canVote = true }) => {
+const Votes = ({ game, _handleSubmit, canVote = true }) => {
   return (
     <div className="vote-section">
       <ul className="vote-list">
         <h4>Choices</h4>
-        <div className="info">{program.settings.vote_threshold} Votes Needed</div>
-        {program &&
-          program.chars &&
-          program.chars
-            .filter((char) => char.votes_count > 1)
-            .map((char) => (
-              <li key={char.id} className="vote-item" onClick={() => canVote && _handleSubmit(char.name)}>
-                <div className={"badge full-width " + (canVote ? "vote clickable" : "disabled")}>
-                  <span>{char.votes_count} Votes</span>
-                  <pre>{char.name}</pre>
-                </div>
-              </li>
-            ))}
+        <div className="info">{game.vote_threshold} Votes Needed</div>
+        {(game.nominees || [])
+          .filter((nominee) => nominee.votes_count > 1)
+          .map((nominee) => (
+            <li
+              key={nominee.id}
+              className="vote-item"
+              onClick={() => canVote && _handleSubmit(nominee.body)}
+            >
+              <div
+                className={
+                  "badge full-width " +
+                  (canVote ? "vote clickable" : "disabled")
+                }
+              >
+                <span>{nominee.votes_count} Votes</span>
+                <pre>{nominee.body}</pre>
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );

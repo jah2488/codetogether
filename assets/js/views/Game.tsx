@@ -1,52 +1,31 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import ApiClient from "../lib/client/ApiClient";
-import { Program } from "../lib/types/types";
-import { parseCookies } from "../lib/helpers/helpers";
 import Filter from "../lib/helpers/filter";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Chat from "./Shared/Chat";
 import Editor from "./Shared/Editor";
 import Output from "./Shared/Output";
-import Title from "./Shared/Title";
 import Constants from "../lib/constants/constants";
 import ConfettiGenerator from "confetti-js";
 import Votes from "./Shared/Votes";
+import { Store, notLoaded, State } from "../store";
+import { Game } from "../Game";
+import { Channel } from "phoenix";
 
-const Game = ({ id: int }) => {
-  const client = new ApiClient();
-  // const [channel, setChannel] = useState(null);
-  const [program, setProgram] = useState({} as Program);
+interface Props {
+  game: Game;
+  store: Store;
+}
+
+const GameView = ({ game, store }: Props): JSX.Element => {
   const [addition, setAddition] = useState("");
   const [error, setError] = useState("");
   const [confetti, setConfetti] = useState(false);
 
-  // const cookies: { user_token: string } = parseCookies();
-  // const userToken = cookies.user_token;
-
   useEffect(() => {
-    const id = window.location.pathname.split("/")[2];
-    const url = `/games/${id}`;
-
-    client
-      .get(url)
-      // .then((response) => response.json())
-      .then((program) => {
-        // const programChannel = ProgramChannel(program, setProgram);
-
-        setTimeout(() => {
-          // programChannel.message({ isCode: false, addition: "" });
-        }, 500);
-
-        // setProgram(program);
-        // setChannel(programChannel);
-      });
-  }, []);
-
-  useEffect(() => {
-    setConfetti(_.get(program, "settings.confetti"));
-  }, [program]);
+    setConfetti(_.get(game, "settings.confetti"));
+  }, [game]);
 
   useEffect(() => {
     if (!confetti) return;
@@ -61,9 +40,9 @@ const Game = ({ id: int }) => {
     return () => _confetti.clear();
   }, [confetti]);
 
-  const _handleInput = (program) => (e) => {
+  const _handleInput = (e) => {
     if (
-      e.target.value.length <= program.settings.max_input_mode ||
+      e.target.value.length <= game.max_input ||
       e.target.value.substr(0, 1) === Constants.CODE_KEY ||
       Object.values(Constants.COMMANDS).join("").includes(e.target.value)
     ) {
@@ -83,19 +62,18 @@ const Game = ({ id: int }) => {
     }
   };
 
-  const _handleInvisibilityToggle = (on: boolean) => {
-    if (on) {
-      setProgram({ ...program, ...{ settings: { ...program.settings, show_invisibles: true } } });
-    } else {
-      setProgram({ ...program, ...{ settings: { ...program.settings, show_invisibles: false } } });
-    }
+  const _handleInvisibilityToggle = (on: boolean): void => {
+    store.update("toggle-invisibility", on);
   };
 
-  const _handleSubmit = (val) => {
+  const _handleSubmit = (val): void => {
     if (val === "") return;
 
-    if (Object.values(Constants.COMMANDS).includes(val) == false && val[0] !== Constants.CODE_KEY) {
-      if (val.length > program.settings.max_input_mode) {
+    if (
+      Object.values(Constants.COMMANDS).includes(val) == false &&
+      val[0] !== Constants.CODE_KEY
+    ) {
+      if (val.length > game.max_input) {
         setError("This message is too long");
         return;
       }
@@ -115,51 +93,59 @@ const Game = ({ id: int }) => {
       addition: string;
     };
 
-    const data: Data = {
+    const messagePayload: Data = {
       isCode: true,
       addition: val,
     };
 
     if (val[0] === Constants.CODE_KEY) {
-      data.isCode = false;
-      data.addition = val.substring(1);
+      messagePayload.isCode = false;
+      messagePayload.addition = val.substring(1);
     }
 
-    // (channel as ProgramChannel).message(data);
+    (store.get("socket") as Channel).push("message:new", messagePayload);
     setAddition("");
     document.getElementById("chatFieldInput").focus();
   };
 
-  if (!program || !program.id || !program.mode || !program.settings) return null;
   return (
     <>
-      <canvas className={program.settings.confetti ? "confetti-on" : "confetti-off"} id="my-canvas"></canvas>
-      {program.settings.play_state === "paused" && (
+      <canvas
+        className={game.confetti ? "confetti-on" : "confetti-off"}
+        id="my-canvas"
+      ></canvas>
+      {game.play_state === "paused" && (
         <>
           <div className="paused"></div>
         </>
       )}
       <Row className="header">
-        <Title program={program} />
+        <h1>{game.name}</h1>
       </Row>
-      <Row className="program-container">
+      <Row className="game-container">
         <Col className="output-content section column">
-          <Editor program={program} output={program.output} />
-          <Output output={program.output} />
+          <Editor game={game} output={game.output} showInvisibles={true} />
+          <Output output={game.output} />
         </Col>
-        {program.mode.toLowerCase() !== Constants.ANARCHY && (
-          <Votes _handleSubmit={_handleSubmit} program={program} canVote={program.settings.can_vote} />
-        )}
+        {game.mode.toLowerCase() !== Constants.ANARCHY && true}
+        <Votes
+          _handleSubmit={_handleSubmit}
+          game={game}
+          canVote={game.can_vote}
+        />
         <Col className="chat-sidebar">
           <Chat
             _handleSubmit={_handleSubmit}
             _handleInput={_handleInput}
             _handleEnter={_handleEnter}
             _handleInvisibilityToggle={_handleInvisibilityToggle}
-            program={program}
+            game={game}
             addition={addition}
             error={error}
-            userToken={32}
+            userToken={"temp-token"}
+            showInvisibles={true}
+            userCount={1}
+            messages={[]}
           />
         </Col>
       </Row>
@@ -167,4 +153,4 @@ const Game = ({ id: int }) => {
   );
 };
 
-export default Game;
+export default GameView;
