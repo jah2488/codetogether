@@ -8,6 +8,7 @@
 .chat-sidebar {
   position: fixed;
   right: 0;
+  top: 0; /* TODO: Fix sidebar alignment */
 
   background: white;
   border: 1px solid #c3c3c3;

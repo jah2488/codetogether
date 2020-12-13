@@ -145,7 +145,7 @@ const GameView = ({ game, store }: Props): JSX.Element => {
             userToken={"temp-token"}
             showInvisibles={true}
             userCount={1}
-            messages={[]}
+            messages={game.messages}
           />
         </Col>
       </Row>

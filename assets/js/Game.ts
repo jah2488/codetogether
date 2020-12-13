@@ -13,6 +13,7 @@ interface Game {
   id: number;
   inserted_at: Date;
   max_input: number;
+  messages: Message[];
   mode: string;
   name: string;
   nominees: Nominee[];
@@ -22,4 +23,12 @@ interface Game {
   vote_interval: number;
   vote_threshold: number;
 }
+
+export type Message = {
+  id: number;
+  name: string;
+  color: string;
+  is_code: boolean;
+  user_id: number;
+};
 export type { Game };

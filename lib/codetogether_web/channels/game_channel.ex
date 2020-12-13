@@ -88,16 +88,44 @@ defmodule CodetogetherWeb.GameChannel do
   end
 
   defp game_payload(game) do
-    game
-    |> Map.from_struct()
-    |> Enum.map(&convert_to_map/1)
-    |> Enum.into(%{})
-    |> Map.drop([:__meta__])
+    messages =
+      game.messages
+      |> Enum.map(&message_payload/1)
+
+    entries =
+      game.entries
+      |> Enum.map(fn (e) -> e.body end)
+      |> Enum.join("")
+
+    # game.nominees,
+    # game.ouput,
+    %{
+      "can_vote" => game.can_vote,
+      "code" => entries,
+      "complete" => game.complete,
+      "confetti" => game.confetti,
+      "description" => game.description,
+      "id" => game.id,
+      "inserted_at" => game.inserted_at,
+      "max_input" => game.max_input,
+      "messages" => messages,
+      "mode" => game.mode,
+      "name" => game.name,
+      "nominees" => [],
+      "output" => "",
+      "play_state" => game.play_state,
+      "updated_at" => game.updated_at,
+      "vote_interval" => game.vote_interval,
+      "vote_threshold" => game.vote_threshold
+    }
   end
 
-  # defp convert_to_map({key, value}), do: {key, value}
-  defp convert_to_map({key, value}) when is_map(value) do
-    IO.inspect("HIITTTTTTTTTTTTT")
-    {key, Map.from_struct(value) |> Map.drop([:__meta__])}
+  def message_payload(message) do
+    %{
+      "id" => message.id,
+      "body" => message.body,
+      "is_code" => message.is_code,
+      "user_id" => message.user_id
+    }
   end
 end
