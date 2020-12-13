@@ -9,7 +9,7 @@ hljs.configure({
 
 const Editor = ({ game: { code }, showInvisibles, output }) => (
   <div className="code-section source">
-    <div className="program-code scrollable">
+    <div className="game-code scrollable">
       <pre
         dangerouslySetInnerHTML={{
           __html: formatCode(code, output, showInvisibles),

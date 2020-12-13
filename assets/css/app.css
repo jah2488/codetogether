@@ -1,7 +1,7 @@
 /* This file is for your main application css. */
 @import "_variables.scss";
 @import "./application.css";
-@import "program.scss";
+@import "game.scss";
 @import "chat.scss";
 @import "button.scss";
 @import "input.scss";

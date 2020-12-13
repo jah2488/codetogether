@@ -9,7 +9,7 @@ const formatCode = (output): string => {
 
 const Output = ({ output }): JSX.Element => (
   <div className="code-section output">
-    <div className="program-code">
+    <div className="game-code">
       <pre dangerouslySetInnerHTML={{ __html: `${formatCode(output)}` }} />
     </div>
   </div>

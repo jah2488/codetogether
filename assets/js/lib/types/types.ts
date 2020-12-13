@@ -1,4 +1,4 @@
-export type Program = {
+export type Game = {
   id: string;
   code: string;
   mode: string;

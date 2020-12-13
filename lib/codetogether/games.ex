@@ -2,6 +2,8 @@ defmodule Codetogether.Games do
   import Ecto.Query, warn: false
   alias Codetogether.Repo
 
+  alias Ecto.Queryable
+
   alias Codetogether.Games.Entry
   alias Codetogether.Games.Game
   alias Codetogether.Games.Message
@@ -37,10 +39,19 @@ defmodule Codetogether.Games do
     Repo.get_by(Nominee, %{body: name, game_id: game.id})
   end
 
+  @spec create_entry(Codetogether.Games.Game.t(), String.t()) :: any
   def create_entry(%Game{} = game, addition) do
-    %Entry{}
-    |> Entry.changeset(%{game_id: game.id, body: addition})
-    |> Repo.insert()
+    case addition do
+      ":bk" ->
+        Entry
+        |> Ecto.Query.last
+        |> Repo.one
+        |> Repo.delete
+      _ ->
+        %Entry{}
+        |> Entry.changeset(%{game_id: game.id, body: Entry.format_name(addition)})
+        |> Repo.insert()
+    end
   end
 
   def create_vote(%Nominee{} = nominee) do
