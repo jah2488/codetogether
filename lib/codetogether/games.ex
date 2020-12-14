@@ -2,8 +2,6 @@ defmodule Codetogether.Games do
   import Ecto.Query, warn: false
   alias Codetogether.Repo
 
-  alias Ecto.Queryable
-
   alias Codetogether.Games.Entry
   alias Codetogether.Games.Game
   alias Codetogether.Games.Message
@@ -43,8 +41,10 @@ defmodule Codetogether.Games do
   def create_entry(%Game{} = game, addition) do
     case addition do
       ":bk" ->
-        Entry
-        |> Ecto.Query.last
+        Ecto.Query.from(e in Entry,
+          where: e.game_id == ^game.id,
+          order_by: [desc: e.id],
+          limit: 1)
         |> Repo.one
         |> Repo.delete
       _ ->

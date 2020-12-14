@@ -2,6 +2,8 @@ defmodule Codetogether.Games.Entry do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Ecto.Queryable
+
   schema "entries" do
     field :body, :string
     field :game_id, :id
