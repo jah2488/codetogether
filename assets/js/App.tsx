@@ -37,7 +37,6 @@ const App = ({ id }): JSX.Element => {
     case "loaded":
       return (
         <>
-          <h1>Hello {state.game.status}</h1>
           <GameView game={state.game.record} store={store} />
         </>
       );

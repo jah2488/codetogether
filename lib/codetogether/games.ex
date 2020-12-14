@@ -37,10 +37,21 @@ defmodule Codetogether.Games do
     Repo.get_by(Nominee, %{body: name, game_id: game.id})
   end
 
+  @spec create_entry(Codetogether.Games.Game.t(), String.t()) :: any
   def create_entry(%Game{} = game, addition) do
-    %Entry{}
-    |> Entry.changeset(%{game_id: game.id, body: addition})
-    |> Repo.insert()
+    case addition do
+      ":bk" ->
+        Ecto.Query.from(e in Entry,
+          where: e.game_id == ^game.id,
+          order_by: [desc: e.id],
+          limit: 1)
+        |> Repo.one
+        |> Repo.delete
+      _ ->
+        %Entry{}
+        |> Entry.changeset(%{game_id: game.id, body: Entry.format_name(addition)})
+        |> Repo.insert()
+    end
   end
 
   def create_vote(%Nominee{} = nominee) do
